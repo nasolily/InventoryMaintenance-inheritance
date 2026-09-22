@@ -10,6 +10,7 @@ namespace InventoryMaintenance
 {
     public partial class frmNewItem : Form
     {
+        // Nadia Cowins
         public frmNewItem()
         {
             InitializeComponent();
@@ -17,6 +18,7 @@ namespace InventoryMaintenance
 
         private InvItem invItem = null;
 
+        // Nadia Cowins
         public InvItem GetNewItem()
         {
             LoadComboBox();
@@ -24,6 +26,7 @@ namespace InventoryMaintenance
             return invItem;
         }
 
+        // Nadia Cowins
         private void LoadComboBox()
         {
             cboSizeOrManufacturer.Items.Clear();
@@ -45,15 +48,32 @@ namespace InventoryMaintenance
             }
         }
 
+        // Nadia Cowins
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (IsValidData())
             {
                 //Here you should create a new item of the appropriate type using the data entered by the user (use the invItem as the item variable)
+                int itemNo = Convert.ToInt32(txtItemNo.Text);
+                string description = txtDescription.Text;
+                decimal price = Convert.ToDecimal(txtPrice.Text);
+                string sizeOrManufacturer = cboSizeOrManufacturer.SelectedItem.ToString();
+
+                if (rdoPlant.Checked)
+                {
+                    invItem = new Plant(itemNo, description, price, sizeOrManufacturer);
+                }
+                else
+                {
+                    invItem = new Supply(itemNo, description, price, sizeOrManufacturer);
+                }
+
+
                 this.Close();
             }
         }
 
+        // Nadia Cowins
         private bool IsValidData()
         {
             return Validator.IsPresent(txtItemNo) &&
@@ -63,11 +83,13 @@ namespace InventoryMaintenance
                    Validator.IsDecimal(txtPrice);
         }
 
+        // Nadia Cowins
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Nadia Cowins
         private void rdoPlant_CheckedChanged(object sender, EventArgs e)
         {
             if (rdoPlant.Checked)
